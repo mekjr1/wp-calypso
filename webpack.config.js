@@ -8,7 +8,6 @@
  * External dependencies
  */
 const _ = require( 'lodash' );
-const CopyWebpackPlugin = require( './server/bundler/copy-webpack-plugin' );
 const fs = require( 'fs' );
 const path = require( 'path' );
 const webpack = require( 'webpack' );
@@ -189,6 +188,10 @@ function getWebpackConfig( { extensionName = '' } = {}, argv ) {
 					loader: 'html-loader',
 				},
 				{
+					test: /\.(svg)$/,
+					use: 'file-loader',
+				},
+				{
 					include: require.resolve( 'tinymce/tinymce' ),
 					use: 'exports-loader?window=tinymce',
 				},
@@ -237,9 +240,6 @@ function getWebpackConfig( { extensionName = '' } = {}, argv ) {
 			} ),
 			new webpack.NormalModuleReplacementPlugin( /^path$/, 'path-browserify' ),
 			new webpack.IgnorePlugin( /^props$/ ),
-			new CopyWebpackPlugin( [
-				{ from: 'node_modules/flag-icon-css/flags/4x3', to: 'images/flags' },
-			] ),
 			new MiniCssExtractPlugin(),
 			new AssetsWriter( {
 				filename: 'assets.json',
