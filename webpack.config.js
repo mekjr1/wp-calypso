@@ -163,10 +163,10 @@ function getWebpackConfig( { extensionName = '' } = {}, argv ) {
 					use: _.compact( [
 						MiniCssExtractPlugin.loader,
 						'css-loader',
-						extensionName && {
-							loader: 'namespace-css-loader',
-							options: `.${ extensionName }`, // Just the namespace class
-						},
+						// extensionName && {
+						// 	loader: 'namespace-css-loader',
+						// 	options: `.${ extensionName }`, // Just the namespace class
+						// },
 						{
 							loader: 'sass-loader',
 							options: {
