@@ -75,17 +75,25 @@ const babelLoader = {
 	},
 };
 
+const sassLoader = {
+	loader: 'sass-loader',
+	options: {
+		includePaths: [ path.join( __dirname, 'client' ) ],
+		data: `@import '${ path.join( __dirname, 'assets/stylesheets/shared/utils' ) }';`,
+	},
+};
+
 /**
  * Return a webpack config object
  *
  * @see {@link https://webpack.js.org/configuration/configuration-types/#exporting-a-function}
  *
  * @param  {object}  env                environment options
- * @param  {string}  env.extensionName  set by bin/sdk/gutenberg.js when building Gutenberg extensions
+ * @param  {string}  env.namespaceSDK   set by bin/sdk/gutenberg.js when building Gutenberg extensions
  * @param  {object}  argv               options map
  * @return {object}                     webpack config
  */
-function getWebpackConfig( { extensionName = '' } = {}, argv ) {
+function getWebpackConfig( { namespaceSDK = '' } = {} ) {
 	const webpackConfig = {
 		bail: ! isDevelopment,
 		entry: { build: [ path.join( __dirname, 'client', 'boot', 'app' ) ] },
@@ -160,19 +168,20 @@ function getWebpackConfig( { extensionName = '' } = {}, argv ) {
 				},
 				{
 					test: /\.(sc|sa|c)ss$/,
+					include: path.join( __dirname, 'client/gutenberg' ),
+					use: _.compact( [ MiniCssExtractPlugin.loader, 'css-loader', sassLoader ] ),
+				},
+				{
+					test: /\.(sc|sa|c)ss$/,
+					exclude: path.join( __dirname, 'client/gutenberg' ),
 					use: _.compact( [
 						MiniCssExtractPlugin.loader,
 						'css-loader',
-						// extensionName && {
-						// 	loader: 'namespace-css-loader',
-						// 	options: `.${ extensionName }`, // Just the namespace class
-						// },
-						{
-							loader: 'sass-loader',
-							options: {
-								includePaths: [ path.join( __dirname, 'client' ) ],
-							},
+						namespaceSDK && {
+							loader: 'namespace-css-loader',
+							options: `.${ namespaceSDK }`,
 						},
+						sassLoader,
 					] ),
 				},
 				{
