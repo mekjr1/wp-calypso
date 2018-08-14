@@ -32,7 +32,9 @@ export default {
 			return null;
 		}
 
-		context.primary = <CurrentPlan context={ context } />;
+		context.primary = (
+			<CurrentPlan context={ context } doPlanSetup={ context.query.hasOwnProperty( 'do-setup' ) } />
+		);
 		next();
 	},
 };
