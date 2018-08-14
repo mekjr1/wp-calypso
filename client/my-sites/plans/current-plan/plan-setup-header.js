@@ -22,7 +22,7 @@ export class PlanSetupHeader extends Component {
 				<ProgressBar isPlusing total={ 100 } value={ 10 } />
 				<div>
 					<a href={ /* @TODO (sirreal) fix this */ document.location.pathname }>
-						{ translate( "Skip installing. I'll do this later" ) }
+						{ translate( 'Skip setup. I’ll do this later.' ) }
 					</a>
 				</div>
 			</Card>
