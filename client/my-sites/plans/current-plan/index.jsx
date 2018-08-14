@@ -37,6 +37,7 @@ import SidebarNavigation from 'my-sites/sidebar-navigation';
 import ChecklistShow from 'my-sites/checklist/checklist-show';
 import { isEnabled } from 'config';
 import QueryJetpackPlugins from 'components/data/query-jetpack-plugins';
+import PlanSetupHeader from './plan-setup-header';
 
 class CurrentPlan extends Component {
 	static propTypes = {
@@ -135,17 +136,24 @@ class CurrentPlan extends Component {
 				) }
 
 				<Fragment>
-					<CurrentPlanHeader
-						selectedSite={ selectedSite }
-						isPlaceholder={ isLoading }
-						title={ title }
-						tagLine={ tagLine }
-						currentPlanSlug={ currentPlanSlug }
-						currentPlan={ currentPlan }
-						isExpiring={ isExpiring }
-						isAutomatedTransfer={ isAutomatedTransfer }
-						includePlansLink={ currentPlan && isFreeJetpackPlan( currentPlan ) }
-					/>
+					{ this.props.doPlanSetup &&
+					isEnabled( 'jetpack/checklist' ) &&
+					isJetpack &&
+					! isAutomatedTransfer ? (
+						<PlanSetupHeader />
+					) : (
+						<CurrentPlanHeader
+							selectedSite={ selectedSite }
+							isPlaceholder={ isLoading }
+							title={ title }
+							tagLine={ tagLine }
+							currentPlanSlug={ currentPlanSlug }
+							currentPlan={ currentPlan }
+							isExpiring={ isExpiring }
+							isAutomatedTransfer={ isAutomatedTransfer }
+							includePlansLink={ currentPlan && isFreeJetpackPlan( currentPlan ) }
+						/>
+					) }
 					{ isEnabled( 'jetpack/checklist' ) &&
 						isJetpack &&
 						! isAutomatedTransfer && (
