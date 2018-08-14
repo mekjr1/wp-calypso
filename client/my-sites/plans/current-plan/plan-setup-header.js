@@ -10,7 +10,7 @@ import { localize } from 'i18n-calypso';
  */
 import Card from 'components/card';
 
-export class ThankYouHeader extends Component {
+export class PlanSetupHeader extends Component {
 	static propTypes = {};
 
 	render() {
@@ -19,4 +19,4 @@ export class ThankYouHeader extends Component {
 	}
 }
 
-export default localize( ThankYouHeader );
+export default localize( PlanSetupHeader );
