@@ -19,7 +19,7 @@ import { getSelectedSiteId } from 'state/ui/selectors';
 import getSiteChecklist from 'state/selectors/get-site-checklist';
 import { isJetpackSite, getSiteSlug } from 'state/sites/selectors';
 import QuerySiteChecklist from 'components/data/query-site-checklist';
-import { launchTask, tasks as wpcomTasks } from '../onboardingChecklist';
+import { launchTask, getTasks as getWpcomTasks } from '../onboardingChecklist';
 import { loadTrackingTool, recordTracksEvent } from 'state/analytics/actions';
 import { createNotice } from 'state/notices/actions';
 import { requestGuidedTour } from 'state/ui/guided-tours/actions';
@@ -51,8 +51,7 @@ class ChecklistShow extends PureComponent {
 	};
 
 	render() {
-		const { isJetpack, siteId, taskStatuses } = this.props;
-		const tasks = isJetpack ? jetpackTasks : wpcomTasks;
+		const { siteId, taskStatuses, tasks } = this.props;
 
 		return (
 			<Fragment>
@@ -81,12 +80,14 @@ class ChecklistShow extends PureComponent {
 
 const mapStateToProps = state => {
 	const siteId = getSelectedSiteId( state );
+	const isJetpack = isJetpackSite( state, siteId );
 
 	return {
-		isJetpack: isJetpackSite( state, siteId ),
+		isJetpack,
 		siteId,
 		siteSlug: getSiteSlug( state, siteId ),
 		taskStatuses: get( getSiteChecklist( state, siteId ), [ 'tasks' ] ),
+		tasks: isJetpack ? jetpackTasks : getWpcomTasks( state, siteId ),
 	};
 };
 
