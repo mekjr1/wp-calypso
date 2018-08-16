@@ -54,7 +54,7 @@ const PluginRender = () => (
 	</Fragment>
 );
 
-registerPlugin( 'a8c/publicize', {
+registerPlugin( 'a8c-publicize', {
 	render: PluginRender
 } );
 
