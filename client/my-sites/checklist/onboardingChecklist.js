@@ -5,7 +5,7 @@
 import page from 'page';
 import { isDesktop } from 'lib/viewport';
 import { translate } from 'i18n-calypso';
-import getSiteDesignType from 'state/selectors/get-site-design-type';
+import { getSiteOption } from 'state/sites/selectors';
 
 export const tasks = [
 	{
@@ -111,7 +111,7 @@ export const tasks = [
 ];
 
 export function getTasks( state, siteId ) {
-	const designType = getSiteDesignType( state, siteId );
+	const designType = getSiteOption( state, siteId, 'design_type' );
 
 	if ( designType === 'blog' ) {
 		return tasks;
