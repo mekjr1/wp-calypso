@@ -295,7 +295,7 @@ export class SignupProcessingScreen extends Component {
 		return (
 			config.isEnabled( 'onboarding-checklist' ) &&
 			'store' !== designType &&
-			[ 'personal', 'premium', 'business' ].indexOf( this.props.flowName ) === -1
+			[ 'main', 'desktop' ].indexOf( this.props.flowName ) !== -1
 		);
 	}
 
